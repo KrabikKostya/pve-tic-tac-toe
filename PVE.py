@@ -59,16 +59,17 @@ class AI(Player):
     turn_number: int = randint(0, 1)
     name: str = Game.players[not turn_number == 0]
     game_object: str = Game.game_objects[not turn_number == 0]
+    turn_states: tuple[str] = ("dangerous", "winning", "neutral")
+    current_turn_state: str = turn_states[2]
 
-    @classmethod
-    def turn_logic(cls, difficulty: str) -> tuple[int, int]:
-        if "1" in difficulty:
+    def turn_logic(self) -> tuple[int, int]:
+        if "1" in Game.game_mod or self.current_turn_state == self.turn_states[2]:
             row = randint(0, 2)
             column = randint(0, 2)
             return row, column
 
     def make_turn(self) -> None:
-        row, column = self.turn_logic(Game.game_mod)
+        row, column = self.turn_logic()
         if Game.game_fild[row][column] == "-":
             Game.game_fild[row][column] = self.game_object
             Game.turn_number += 1

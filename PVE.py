@@ -2,15 +2,6 @@ from abc import ABC
 from random import randint
 
 
-def turn_logic(difficulty: str) -> tuple[int, int]:
-    if "1" in difficulty:
-        row = randint(0, 2)
-        column = randint(0, 2)
-        return row, column
-    else:
-        pass
-
-
 class Game:
     game_fild: list[list[str]] = [["-" for j in range(3)] for i in range(3)]
     game_objects: tuple[str] = ("X", "0")
@@ -69,8 +60,15 @@ class AI(Player):
     name: str = Game.players[not turn_number == 0]
     game_object: str = Game.game_objects[not turn_number == 0]
 
+    @classmethod
+    def turn_logic(cls, difficulty: str) -> tuple[int, int]:
+        if "1" in difficulty:
+            row = randint(0, 2)
+            column = randint(0, 2)
+            return row, column
+
     def make_turn(self) -> None:
-        row, column = turn_logic(Game.game_mod)
+        row, column = self.turn_logic(Game.game_mod)
         if Game.game_fild[row][column] == "-":
             Game.game_fild[row][column] = self.game_object
             Game.turn_number += 1

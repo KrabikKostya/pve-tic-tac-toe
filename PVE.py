@@ -23,8 +23,8 @@ class Game:
         self.game_mod = difficulty
 
     def turn(self) -> None:
-        global player
-        global ai
+        ai = AI()
+        player = HumanPlayer()
         if self.turn_number % 2 == 0 and ai.name == self.players[0] and self.turn_number != 9:
             ai.make_turn()
             return None
@@ -109,7 +109,7 @@ class HumanPlayer(Player):
             self.make_turn()
 
 
-if __name__ == '__main__':
+def main():
     print("Chose a game difficulty: ",
           "1 - Easy",
           "2 - Hard",
@@ -121,7 +121,7 @@ if __name__ == '__main__':
     print("=" * 255)
     print(f"You are the {player.name}")
     print(f"Bot is the {ai.name}")
-    print(f"Game Mod: {'Easy' if '1' in game.game_mod else 'Hard'}")
+    print(f"Game mod is {'easy' if '1' in game.game_mod else 'hard'}")
     print("=" * 255)
     if player.name == game.players[0]:
         print(*Game.game_fild, sep="\n")
@@ -134,3 +134,7 @@ if __name__ == '__main__':
             break
     else:
         print(game.state.capitalize())
+
+
+if __name__ == '__main__':
+    main()
